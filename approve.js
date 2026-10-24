@@ -1,12 +1,10 @@
 exports.handler = async (event) => {
+  const { paymentId } = JSON.parse(event.body);
+  const apiKey = process.env.PI_API_KEY;
   try {
-    const { paymentId } = JSON.parse(event.body);
     const res = await fetch(`https://api.minepi.com/v2/payments/${paymentId}/approve`, {
       method: 'POST',
-      headers: { 
-        'Authorization': `Key VOTRE_CLE_API_PI`,
-        'Content-Type': 'application/json'
-      }
+      headers: { 'Authorization': `Key ${apiKey}` }
     });
     const data = await res.text();
     return { statusCode: 200, body: data };
